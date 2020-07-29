@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Fights.Core.Repositories.Cities;
-using Fights.Core.Repositories.Comments;
-using Fights.Core.Repositories.Organizers;
-using Fights.Core.Repositories.Protests;
+using Fights.Core.Repositories.Fights;
+using Fights.Core.Repositories.Donations;
+using Fights.Core.Repositories.Swipes;
 
 namespace Fights.Api.Extensions
 {
@@ -10,10 +10,10 @@ namespace Fights.Api.Extensions
     {
         public static void RegisterScopedServices(this IServiceCollection services)
         {
-            services.AddScoped<IProtestRepository, ProtestRepository>();
-            services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
-            services.AddScoped<IOrganizerRepository, OrganizerRepository>();
+            services.AddScoped<IFightRepository, FightRepository>();
+            services.AddScoped<IDonationRepository, DonationRepository>();
+            services.AddScoped<ISwipeRepository, SwipeRepository>();
         }
     }
 }

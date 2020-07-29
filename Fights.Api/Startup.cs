@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Fights.Api.Extensions;
-using Fights.Core.Repositories.Protests;
 using Fights.Data.Database;
 
 namespace Fights.Api
@@ -40,7 +39,7 @@ namespace Fights.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             /* database connection, used from appsettings */
-            services.AddDbContext<ProtestsContext>(options =>
+            services.AddDbContext<FightsContext>(options =>
                 //options.UseSqlServer(Configuration["ConnectionStrings:Default"], x => x.MigrationsAssembly("Fights.Data"))
                 options.UseSqlServer(Configuration["ConnectionStrings:Default"])
             );

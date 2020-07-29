@@ -1,21 +1,14 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Fights.Core.Repositories.Cities;
-using Fights.Core.Repositories.Protests;
 using Fights.Data.Entities;
-using Fights.Data.Models;
+using Fights.Core.Repositories.Cities;
 
 namespace Fights.Api.Controllers
 {
     [Route("api/cities")]
     public class CityController : BaseController
     {
-
         private readonly ICityRepository cityRepository;
         private readonly IMapper mapper;
 
@@ -27,36 +20,37 @@ namespace Fights.Api.Controllers
             this.cityRepository = cityRepository;
             this.mapper = mapper;
         }
-
         [HttpGet]
         public ActionResult<IEnumerable<City>> GetAll([FromQuery] string search)
         {
-            var cities = this.cityRepository.GetAll(search);
-            return Ok(cities);
+            var city = this.cityRepository.GetAll(search);
+            return Ok(city);
         }
-
-        // [HttpGet("{id}")]
-        // public ActionResult<ProtestDetail> GetOne(long id)
-        // {
-        //     var entity = this.cityRepository.GetOne(id);
-        //     var protest = this.mapper.Map<ProtestDetail>(entity);
-        //     return Ok(protest);
-        // }
-
-        // [HttpPut("{id}")]
-        // public ActionResult<Protest> Put(long id, Protest p)
-        // {
-        //     var protest = this.cityRepository.Update(id, p);
-        //     return Ok(protest);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public ActionResult<Protest> Delete(long id)
-        // {
-        //     this.cityRepository.Delete(id);
-        //     return Ok();
-        // }
-
-
+        [HttpGet("{id}")]
+        public ActionResult<City> GetOne(long id)
+        {
+            var entity = this.cityRepository.GetOne(id);
+            var city = this.mapper.Map<City>(entity);
+            return Ok(city);
+        }
+        [HttpPost]
+        public ActionResult<City> Create(City c)
+        {
+            var city = this.mapper.Map<City>(c);
+            city = this.cityRepository.Create(city);
+            return this.mapper.Map<City>(city);
+        }
+        [HttpPut("{id}")]
+        public ActionResult<City> Put(long id, City c)
+        {
+            var city = this.cityRepository.Update(id, c);
+            return Ok(city);
+        }
+        [HttpDelete("{id}")]
+        public ActionResult<City> Delete(long id)
+        {
+            this.cityRepository.Delete(id);
+            return Ok();
+        }
     }
 }

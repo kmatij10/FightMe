@@ -4,41 +4,40 @@ using Microsoft.EntityFrameworkCore;
 using Fights.Data.Database;
 using Fights.Data.Entities;
 
-namespace Fights.Core.Repositories.Organizers
+namespace Fights.Core.Repositories.Fights
 {
-    public class OrganizerRepository : IOrganizerRepository
+    public class FightRepository : IFightRepository
     {
-        private readonly ProtestsContext context;
+        private readonly FightsContext context;
 
-        public OrganizerRepository(ProtestsContext context) => this.context = context;
-        
-        public Organizer Create(Organizer entity)
+        public FightRepository(FightsContext context) => this.context = context;
+        public Fight Create(Fight entity)
         {
-            this.context.Organizers.Add(entity);
+            this.context.Fights.Add(entity);
             this.context.SaveChanges();
             return entity;
         }
 
         public bool Delete(long id)
         {
-            this.context.Organizers.Remove(
+            this.context.Fights.Remove(
                 this.GetOne(id)
             );
             this.context.SaveChanges();
             return true;
         }
 
-        public IEnumerable<Organizer> GetAll(string search)
+        public IEnumerable<Fight> GetAll(string search)
         {
-            var result = this.context.Organizers.ToList();
+            var result = this.context.Fights.ToList();
             return result;
         }
 
-        public Organizer GetOne(long id) => this.context.Organizers
+        public Fight GetOne(long id)=> this.context.Fights
             .Where(o => o.Id == id)
-            .First<Organizer>();
+            .First<Fight>();
 
-        public Organizer Update(long id, Organizer entity)
+        public Fight Update(long id, Fight entity)
         {
             entity.Id = id;
             this.context.Entry(entity).State = EntityState.Modified;

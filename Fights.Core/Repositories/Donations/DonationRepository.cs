@@ -3,41 +3,41 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Fights.Data.Database;
 using Fights.Data.Entities;
-namespace Fights.Core.Repositories.Cities
+
+namespace Fights.Core.Repositories.Donations
 {
-    public class CityRepository : ICityRepository
+    public class DonationRepository : IDonationRepository
     {
         private readonly FightsContext context;
 
-        public CityRepository(FightsContext context) => this.context = context;
-        
-        public City Create(City entity)
+        public DonationRepository(FightsContext context) => this.context = context;
+        public Donation Create(Donation entity)
         {
-            this.context.Cities.Add(entity);
+            this.context.Donations.Add(entity);
             this.context.SaveChanges();
             return entity;
         }
 
         public bool Delete(long id)
         {
-            this.context.Cities.Remove(
+            this.context.Donations.Remove(
                 this.GetOne(id)
             );
             this.context.SaveChanges();
             return true;
         }
 
-        public IEnumerable<City> GetAll(string search)
+        public IEnumerable<Donation> GetAll(string search)
         {
-            var result = this.context.Cities.ToList();
+            var result = this.context.Donations.ToList();
             return result;
         }
 
-        public City GetOne(long id) => this.context.Cities
+        public Donation GetOne(long id) => this.context.Donations
             .Where(o => o.Id == id)
-            .First<City>();
+            .First<Donation>();
 
-        public City Update(long id, City entity)
+        public Donation Update(long id, Donation entity)
         {
             entity.Id = id;
             this.context.Entry(entity).State = EntityState.Modified;

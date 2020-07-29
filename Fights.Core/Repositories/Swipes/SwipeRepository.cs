@@ -3,41 +3,41 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Fights.Data.Database;
 using Fights.Data.Entities;
-namespace Fights.Core.Repositories.Cities
+
+namespace Fights.Core.Repositories.Swipes
 {
-    public class CityRepository : ICityRepository
+    public class SwipeRepository : ISwipeRepository
     {
         private readonly FightsContext context;
 
-        public CityRepository(FightsContext context) => this.context = context;
-        
-        public City Create(City entity)
+        public SwipeRepository(FightsContext context) => this.context = context;
+        public Swipe Create(Swipe entity)
         {
-            this.context.Cities.Add(entity);
+            this.context.Swipes.Add(entity);
             this.context.SaveChanges();
             return entity;
         }
 
         public bool Delete(long id)
         {
-            this.context.Cities.Remove(
+            this.context.Swipes.Remove(
                 this.GetOne(id)
             );
             this.context.SaveChanges();
             return true;
         }
 
-        public IEnumerable<City> GetAll(string search)
+        public IEnumerable<Swipe> GetAll(string search)
         {
-            var result = this.context.Cities.ToList();
+            var result = this.context.Swipes.ToList();
             return result;
         }
 
-        public City GetOne(long id) => this.context.Cities
+        public Swipe GetOne(long id) => this.context.Swipes
             .Where(o => o.Id == id)
-            .First<City>();
+            .First<Swipe>();
 
-        public City Update(long id, City entity)
+        public Swipe Update(long id, Swipe entity)
         {
             entity.Id = id;
             this.context.Entry(entity).State = EntityState.Modified;
